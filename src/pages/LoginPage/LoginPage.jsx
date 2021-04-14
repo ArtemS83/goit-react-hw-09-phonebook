@@ -7,8 +7,8 @@ import authOperations from '../../redux/auth/auth-operations';
 
 const LoginPage = () => {
   //{name:'Artem',email:'aqu@ukr.net', passworld : '1111111'}
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('aqu@ukr.net');
+  const [password, setPassword] = useState('1111111');
   const dispatch = useDispatch();
   const handleChangeEmail = e => setEmail(e.target.value);
   const handleChangePassword = e => setPassword(e.target.value);

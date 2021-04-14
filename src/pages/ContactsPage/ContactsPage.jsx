@@ -17,7 +17,7 @@ const ContactsPage = () => {
 
   useEffect(() => {
     dispatch(fetchContacts());
-  }, []); // eslint-disable-line
+  }, [dispatch]);
 
   const contacts = useSelector(getContacts);
   const isLoading = useSelector(getIsLoadingSelector);

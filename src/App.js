@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { lazy, Suspense } from 'react';
 import { Switch, Redirect } from 'react-router-dom';
+import Container from 'components/Container';
 import AppBar from 'components/AppBar';
 import Loader1 from 'components/Loader1';
 import PrivateRoute from 'components/PrivateRoute';
@@ -29,38 +30,40 @@ const App = () => {
 
   useEffect(() => {
     dispatch(authOperations.getCurrentUser());
-  }, []); // eslint-disable-line
+  }, [dispatch]);
   return (
     <>
       <AppBar />
-      <Suspense
-        fallback={
-          // <div>Loading...</div>
-          <Loader1 />
-        }
-      >
-        <Switch>
-          <PublicRoute path="/" exact component={HomePage} />
-          <PrivateRoute
-            path="/contacts"
-            redirectTo="/login"
-            component={ContactsPage}
-          />
-          <PublicRoute
-            path="/register"
-            restricted
-            redirectTo="/contacts"
-            component={RegisterPage}
-          />
-          <PublicRoute
-            path="/login"
-            restricted
-            redirectTo="/contacts"
-            component={LoginPage}
-          />
-          <Redirect to="/" />
-        </Switch>
-      </Suspense>
+      <Container>
+        <Suspense
+          fallback={
+            // <div>Loading...</div>
+            <Loader1 />
+          }
+        >
+          <Switch>
+            <PublicRoute path="/" exact component={HomePage} />
+            <PrivateRoute
+              path="/contacts"
+              redirectTo="/login"
+              component={ContactsPage}
+            />
+            <PublicRoute
+              path="/register"
+              restricted
+              redirectTo="/contacts"
+              component={RegisterPage}
+            />
+            <PublicRoute
+              path="/login"
+              restricted
+              redirectTo="/contacts"
+              component={LoginPage}
+            />
+            <Redirect to="/" />
+          </Switch>
+        </Suspense>
+      </Container>
     </>
   );
 };

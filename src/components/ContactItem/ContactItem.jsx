@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteContact } from '../../redux/contacts/contacts-operations';
+import FormUpdateContact from 'components/FormUpdateContact';
 import Button from 'components/Button';
 import Modal from 'components/Modal';
 import { MdPhoneAndroid } from 'react-icons/md';
@@ -58,12 +59,14 @@ const ContactItem = ({ name, number, id }) => {
         </div>
       </li>
       {showModal && (
-        <Modal
-          id={id}
-          nameForUpdate={name}
-          numberForUpdate={number}
-          onCloseModal={hendelCloseModal}
-        />
+        <Modal onCloseModal={hendelCloseModal}>
+          <FormUpdateContact
+            id={id}
+            nameForUpdate={name}
+            numberForUpdate={number}
+            onCloseModal={hendelCloseModal}
+          />
+        </Modal>
       )}
     </>
   );
