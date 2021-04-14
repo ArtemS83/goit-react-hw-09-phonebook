@@ -32,6 +32,7 @@ const FormUpdateContact = ({
   const contacts = useSelector(getContacts);
 
   const dispatch = useDispatch();
+
   const handleInputChange = ({ target }) => {
     const { value, name } = target;
     name === 'name' ? setName(value) : setNumber(value);

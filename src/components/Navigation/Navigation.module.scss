@@ -9,7 +9,7 @@
   a:not(:last-child) {
     margin-right: 20px;
   }
-  @media screen and (min-width: 420px) {
+  @media screen and (min-width: 520px) {
     flex-direction: row;
     a:not(:last-child) {
       margin-right: 10px;
@@ -25,7 +25,7 @@
   padding-top: 12px;
   padding-bottom: 12px;
   transition: all 300ms ease-in-out;
-  @media screen and (max-width: 420px) {
+  @media screen and (max-width: 520px) {
     margin-right: 0;
     margin-bottom: 5px;
     // font-size: 18px;

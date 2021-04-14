@@ -10,25 +10,44 @@ import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({
   item: {
-    display: 'flex',
-    alignItems: 'center',
     marginBottom: 10,
+    padding: 10,
+    // backgroundColor: 'rgba(152, 226, 226, 0.74)',
+    border: ' 2px solid rgb(125, 19, 196)',
+    borderRadius: 4,
+    boxShadow: '2px 6px 8px -2px #a09c9c',
     fontSize: 18,
     fontWeight: 500,
+
+    background: 'linear-gradient(45deg, rgb(115, 181, 235), #6dd5fa, #ffffff)',
+    backgroundSize: '400% 400%',
+    animation: 'gradient 10s ease infinite',
+  },
+  '@keyframes gradient': {
+    '0%': { backgroundPosition: '0 50%' },
+    '50%': { backgroundPosition: '100% 50%' },
+    '100%': { backgroundPosition: '0 50%' },
   },
   name: {
-    marginRight: 8,
-    marginLeft: 6,
+    marginLeft: 10,
   },
   number: {
+    marginLeft: 6,
     color: 'rgb(79, 119, 238)',
   },
   divButton: {
-    marginLeft: 'auto',
-    '& button': {
-      marginRight: 5,
-      marginBottom: 5,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    marginTop: 8,
+    '& button:not(:last-child)': {
+      marginRight: 8,
     },
+  },
+  divSpan: {
+    display: 'flex',
+    alignItems: 'center',
+    marginTop: 8,
   },
 });
 
@@ -50,9 +69,12 @@ const ContactItem = ({ name, number, id }) => {
   return (
     <>
       <li className={classes.item}>
-        <MdPhoneAndroid />
-        <span className={classes.name}>{name}:</span>
-        <span className={classes.number}>{number}</span>
+        {/* <MdPhoneAndroid /> */}
+        <p className={classes.name}>{name}</p>
+        <div className={classes.divSpan}>
+          <MdPhoneAndroid color={'#2a2a2a'} />
+          <p className={classes.number}>{number}</p>
+        </div>
         <div className={classes.divButton}>
           <Button title="Update" onClick={hendelOpenModalUpdateContact} />
           <Button title="Delete" onClick={hendelDeleteContact} />
