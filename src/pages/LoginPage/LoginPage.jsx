@@ -1,14 +1,19 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Section from 'components/Section';
 import Button from 'components/Button';
+import Notification from 'components/Notification';
+import Loader from 'react-loader-spinner';
 import style from './LoginPage.module.scss';
 import authOperations from '../../redux/auth/auth-operations';
+import authSelectors from '../../redux/auth/auth-selectors';
 
 const LoginPage = () => {
   //{name:'Artem',email:'aqu@ukr.net', passworld : '1111111'}
   const [email, setEmail] = useState('aqu@ukr.net');
   const [password, setPassword] = useState('1111111');
+  const isLoading = useSelector(authSelectors.getLoadingUser);
+  const error = useSelector(authSelectors.getError);
   const dispatch = useDispatch();
   const handleChangeEmail = e => setEmail(e.target.value);
   const handleChangePassword = e => setPassword(e.target.value);
@@ -33,6 +38,20 @@ const LoginPage = () => {
     <>
       <Section title="">
         <h1 className={style.title}>Login</h1>
+
+        {isLoading && (
+          <div className={style.divLoader}>
+            <Loader
+              type="Puff"
+              color="#1f6ce0"
+              height={50}
+              width={50}
+              visible={isLoading}
+            />
+          </div>
+        )}
+
+        {error && <Notification message={error} />}
         <form onSubmit={handleSubmit} className={style.form} autoComplete="off">
           <label className={style.label}>
             Email

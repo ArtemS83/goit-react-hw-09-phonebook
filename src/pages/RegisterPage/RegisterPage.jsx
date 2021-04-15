@@ -1,18 +1,24 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Section from 'components/Section';
+import Notification from 'components/Notification';
 import Button from 'components/Button';
+import Loader from 'react-loader-spinner';
 import style from './RegisterPage.module.scss';
 import authOperations from '../../redux/auth/auth-operations';
+import authSelectors from '../../redux/auth/auth-selectors';
 
 const RegisterPage = () => {
   const [nameUser, setNameUser] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [agreed, setAgreed] = useState(false);
+  const isLoading = useSelector(authSelectors.getLoadingUser);
+  const error = useSelector(authSelectors.getError);
   const dispatch = useDispatch();
 
   const handleChange = ({ target }) => {
-    const { value, name } = target;
+    const { value, name, checked } = target;
     switch (name) {
       case 'nameUser':
         setNameUser(value);
@@ -20,8 +26,14 @@ const RegisterPage = () => {
       case 'email':
         setEmail(value);
         return;
-      default:
+      case 'password':
         setPassword(value);
+        return;
+      case 'agreed':
+        setAgreed(checked);
+        return;
+      default:
+        return;
     }
   };
   const handleSubmit = e => {
@@ -40,12 +52,28 @@ const RegisterPage = () => {
     setNameUser('');
     setEmail('');
     setPassword('');
+    setAgreed(false);
   };
 
   return (
     <>
       <Section title="">
         <h1 className={style.title}>Sing up</h1>
+
+        {isLoading && (
+          <div className={style.divLoader}>
+            <Loader
+              type="Puff"
+              color="#1f6ce0"
+              height={50}
+              width={50}
+              visible={isLoading}
+            />
+          </div>
+        )}
+
+        {error && <Notification message={error} />}
+
         <form onSubmit={handleSubmit} className={style.form} autoComplete="off">
           <label className={style.label}>
             Name
@@ -78,7 +106,19 @@ const RegisterPage = () => {
               onChange={handleChange}
             />
           </label>
-          <Button title="Sing up" type="submit" />
+          <label className={style.labelCheckbox}>
+            <input
+              className={style.checkbox}
+              type="checkbox"
+              name="agreed"
+              checked={agreed}
+              onChange={handleChange}
+              title="Check the box to register"
+              required
+            />
+            <span>I agree to the terms of service</span>
+          </label>
+          <Button title="Sing up" type="submit" disable={!agreed} />
         </form>
       </Section>
     </>

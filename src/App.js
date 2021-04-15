@@ -28,9 +28,8 @@ const LoginPage = lazy(() =>
 const App = () => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(authOperations.getCurrentUser());
-  }, [dispatch]);
+  useEffect(() => dispatch(authOperations.getCurrentUser()), [dispatch]);
+
   return (
     <>
       <AppBar />
