@@ -28,6 +28,19 @@ const error = createReducer(null, {
   [authActions.logoutRequest]: () => null,
   [authActions.getCurrentUserError]: setError,
   [authActions.getCurrentUserRequest]: () => null,
+  //
+  [authActions.loginErrorMessageCancel]: () => null,
+  [authActions.registerErrorMessageCancel]: () => null,
+});
+const errorLogin = createReducer(null, {
+  [authActions.loginError]: setError,
+  [authActions.loginRequest]: () => null,
+  [authActions.loginErrorMessageCancel]: () => null,
+});
+const errorRegister = createReducer(null, {
+  [authActions.registerError]: setError,
+  [authActions.registerRequest]: () => null,
+  [authActions.registerErrorMessageCancel]: () => null,
 });
 
 const isAuthenticated = createReducer(false, {
@@ -64,4 +77,6 @@ export default combineReducers({
   token,
   error,
   isLoading,
+  errorLogin,
+  errorRegister,
 });

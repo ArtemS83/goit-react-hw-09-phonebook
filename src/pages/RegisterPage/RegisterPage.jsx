@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Section from 'components/Section';
 import Notification from 'components/Notification';
@@ -7,15 +7,23 @@ import Loader from 'react-loader-spinner';
 import style from './RegisterPage.module.scss';
 import authOperations from '../../redux/auth/auth-operations';
 import authSelectors from '../../redux/auth/auth-selectors';
+//
+import authActions from '../../redux/auth/auth-actions';
 
 const RegisterPage = () => {
   const [nameUser, setNameUser] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [agreed, setAgreed] = useState(false);
+
   const isLoading = useSelector(authSelectors.getLoadingUser);
-  const error = useSelector(authSelectors.getError);
+  const error = useSelector(authSelectors.getErrorRegister);
+
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(authActions.loginErrorMessageCancel());
+  }, [dispatch]);
 
   const handleChange = ({ target }) => {
     const { value, name, checked } = target;
@@ -49,10 +57,10 @@ const RegisterPage = () => {
     };
 
     dispatch(authOperations.register(newUser));
-    setNameUser('');
-    setEmail('');
-    setPassword('');
-    setAgreed(false);
+    // setNameUser('');
+    // setEmail('');
+    // setPassword('');
+    // setAgreed(false);
   };
 
   return (
