@@ -1,5 +1,5 @@
+import { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteContact } from '../../redux/contacts/contacts-operations';
 import FormUpdateContact from 'components/FormUpdateContact';
@@ -56,37 +56,42 @@ const ContactItem = ({ name, number, id }) => {
 
   const [showModal, setShowModal] = useState(false);
 
-  const hendelCloseModal = () => {
-    setShowModal(false);
-  };
+  const toggleModal = useCallback(() => {
+    setShowModal(prevShowModal => !prevShowModal);
+  }, []);
+
+  // const toggleModal = () => {
+  //   setShowModal(prevShowModal => !prevShowModal);
+  // };
 
   const dispatch = useDispatch();
 
-  const hendelDeleteContact = () => dispatch(deleteContact(id));
-
-  const hendelOpenModalUpdateContact = () => setShowModal(true);
+  const hendelDeleteContact = useCallback(() => dispatch(deleteContact(id)), [
+    dispatch,
+    id,
+  ]);
+  // const hendelDeleteContact = () => dispatch(deleteContact(id));
 
   return (
     <>
       <li className={classes.item}>
-        {/* <MdPhoneAndroid /> */}
         <p className={classes.name}>{name}</p>
         <div className={classes.divSpan}>
           <MdPhoneAndroid color={'#2a2a2a'} />
           <p className={classes.number}>{number}</p>
         </div>
         <div className={classes.divButton}>
-          <Button title="Update" onClick={hendelOpenModalUpdateContact} />
+          <Button title="Update" onClick={toggleModal} />
           <Button title="Delete" onClick={hendelDeleteContact} />
         </div>
       </li>
       {showModal && (
-        <Modal onCloseModal={hendelCloseModal}>
+        <Modal onCloseModal={toggleModal}>
           <FormUpdateContact
             id={id}
             nameForUpdate={name}
             numberForUpdate={number}
-            onCloseModal={hendelCloseModal}
+            onCloseModal={toggleModal}
           />
         </Modal>
       )}

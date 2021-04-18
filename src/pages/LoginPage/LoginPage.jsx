@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Section from 'components/Section';
 import Button from 'components/Button';
@@ -18,10 +18,16 @@ const LoginPage = () => {
   const isLoading = useSelector(authSelectors.getLoadingUser);
   const error = useSelector(authSelectors.getErrorLogin);
 
+  const inputRef = useRef();
   const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   inputRef.current.focus();
+  // }, []);
 
   useEffect(() => {
     dispatch(authActions.registerErrorMessageCancel());
+    inputRef.current.focus();
   }, [dispatch]);
 
   const handleChangeEmail = e => setEmail(e.target.value);
@@ -68,6 +74,7 @@ const LoginPage = () => {
               value={email}
               placeholder="Enter email"
               onChange={handleChangeEmail}
+              ref={inputRef}
             />
           </label>
 

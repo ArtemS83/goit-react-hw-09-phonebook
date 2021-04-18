@@ -7,6 +7,7 @@ import AppBar from 'components/AppBar';
 import Loader1 from 'components/Loader1';
 import PrivateRoute from 'components/PrivateRoute';
 import PublicRoute from 'components/PublicRoute';
+import PrivateRouteWithoutReduxHooks from 'components/PrivateRouteWithoutReduxHooks';
 import authOperations from 'redux/auth/auth-operations';
 
 const HomePage = lazy(() =>
@@ -42,11 +43,16 @@ const App = () => {
         >
           <Switch>
             <PublicRoute path="/" exact component={HomePage} />
-            <PrivateRoute
+            {/* <PrivateRoute
               path="/contacts"
               redirectTo="/login"
               component={ContactsPage}
-            />
+            /> */}
+            <PrivateRouteWithoutReduxHooks path="/contacts" redirectTo="/login">
+              <ContactsPage />
+            </PrivateRouteWithoutReduxHooks>
+            {/*таким образом не передаются в пропсах location, history,params. Для их вызова используем route-hooks: useLocation, useHistory, useParams */}
+
             <PublicRoute
               path="/register"
               restricted

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import style from './FormUpdateContact.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
@@ -33,35 +33,74 @@ const FormUpdateContact = ({
 
   const dispatch = useDispatch();
 
-  const handleInputChange = ({ target }) => {
+  const handleInputChange = useCallback(({ target }) => {
     const { value, name } = target;
     name === 'name' ? setName(value) : setNumber(value);
-  };
+  }, []);
+  // const handleInputChange = ({ target }) => {
+  //   const { value, name } = target;
+  //   name === 'name' ? setName(value) : setNumber(value);
+  // };
+  const handleSubmitUpdateContact = useCallback(
+    e => {
+      e.preventDefault();
 
-  const handleSubmitUpdateContact = e => {
-    e.preventDefault();
+      if (name === nameForUpdate && number === numberForUpdate) {
+        notify();
+        return;
+      }
 
-    if (name === nameForUpdate && number === numberForUpdate) {
-      notify();
-      return;
-    }
+      const normalizedName = name.toLowerCase().trim();
 
-    const normalizedName = name.toLowerCase().trim();
+      const isExistingUser = contacts
+        .filter(contact => contact.id !== id)
+        .find(contact => contact.name.toLowerCase() === normalizedName);
 
-    const isExistingUser = contacts
-      .filter(contact => contact.id !== id)
-      .find(contact => contact.name.toLowerCase() === normalizedName);
+      if (isExistingUser) {
+        swal('Warning!', `${name} is already in contacts!`, 'warning');
+        return;
+      }
 
-    if (isExistingUser) {
-      swal('Warning!', `${name} is already in contacts!`, 'warning');
-      return;
-    }
+      dispatch(updateContact(id, name, number));
+      setName('');
+      setNumber('');
+      onCloseModal();
+    },
+    [
+      dispatch,
+      onCloseModal,
+      name,
+      number,
+      id,
+      contacts,
+      nameForUpdate,
+      numberForUpdate,
+    ],
+  );
+  // const handleSubmitUpdateContact = e => {
+  //   e.preventDefault();
 
-    dispatch(updateContact(id, name, number));
-    setName('');
-    setNumber('');
-    onCloseModal();
-  };
+  //   if (name === nameForUpdate && number === numberForUpdate) {
+  //     notify();
+  //     return;
+  //   }
+
+  //   const normalizedName = name.toLowerCase().trim();
+
+  //   const isExistingUser = contacts
+  //     .filter(contact => contact.id !== id)
+  //     .find(contact => contact.name.toLowerCase() === normalizedName);
+
+  //   if (isExistingUser) {
+  //     swal('Warning!', `${name} is already in contacts!`, 'warning');
+  //     return;
+  //   }
+
+  //   dispatch(updateContact(id, name, number));
+  //   setName('');
+  //   setNumber('');
+  //   onCloseModal();
+  // };
 
   return (
     <>

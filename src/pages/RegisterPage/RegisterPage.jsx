@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Section from 'components/Section';
 import Notification from 'components/Notification';
@@ -18,11 +18,16 @@ const RegisterPage = () => {
 
   const isLoading = useSelector(authSelectors.getLoadingUser);
   const error = useSelector(authSelectors.getErrorRegister);
-
+  const inputRef = useRef();
   const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   inputRef.current.focus();
+  // }, []);
 
   useEffect(() => {
     dispatch(authActions.loginErrorMessageCancel());
+    inputRef.current.focus();
   }, [dispatch]);
 
   const handleChange = ({ target }) => {
@@ -91,6 +96,7 @@ const RegisterPage = () => {
               value={nameUser}
               placeholder="Enter name"
               onChange={handleChange}
+              ref={inputRef}
             />
           </label>
           <label className={style.label}>

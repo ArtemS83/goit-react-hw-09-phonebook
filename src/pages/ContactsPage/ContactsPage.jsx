@@ -37,7 +37,8 @@ const ContactsPage = () => {
         />
         {contacts.length > 0 ? (
           <>
-            <Filter text="Find contacts by name" />
+            <p>Total contacts: {contacts.length}</p>
+            <Filter text="Find contact by name" />
             <Contacts />
           </>
         ) : (

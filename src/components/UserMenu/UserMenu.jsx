@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Button from 'components/Button';
 import style from './UserMenu.module.scss';
@@ -9,9 +10,13 @@ const UserMenu = () => {
 
   const dispatch = useDispatch();
 
-  const hendelLogOut = () => {
+  const hendelLogOut = useCallback(() => {
     dispatch(authOperations.logOut());
-  };
+  }, [dispatch]);
+
+  // const hendelLogOut = () => {
+  //   dispatch(authOperations.logOut());
+  // };
 
   return (
     <div className={style.userMenu}>

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-// import { connect } from 'react-redux';
+import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { filterContacts } from '../../redux/contacts/contacts-actions';
 import { getFilter } from '../../redux/contacts/contacts-selectors';
@@ -9,10 +9,17 @@ const Filter = ({ text }) => {
   const filter = useSelector(getFilter);
   const dispatch = useDispatch();
 
-  const handleInputFindChange = ({ target }) => {
-    const { value } = target;
-    dispatch(filterContacts(value));
-  };
+  const handleInputFindChange = useCallback(
+    ({ target }) => {
+      const { value } = target;
+      dispatch(filterContacts(value));
+    },
+    [dispatch],
+  );
+  // const handleInputFindChange = ({ target }) => {
+  //   const { value } = target;
+  //   dispatch(filterContacts(value));
+  // };
 
   return (
     <>
@@ -22,6 +29,7 @@ const Filter = ({ text }) => {
         type="text"
         name="filter"
         value={filter}
+        placeholder="Enter name contact"
         onChange={handleInputFindChange}
       />
     </>
