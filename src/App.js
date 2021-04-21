@@ -5,7 +5,7 @@ import { Switch, Redirect } from 'react-router-dom';
 import Container from 'components/Container';
 import AppBar from 'components/AppBar';
 import Loader1 from 'components/Loader1';
-import PrivateRoute from 'components/PrivateRoute';
+// import PrivateRoute from 'components/PrivateRoute';
 import PublicRoute from 'components/PublicRoute';
 import PrivateRouteWithoutReduxHooks from 'components/PrivateRouteWithoutReduxHooks';
 import authOperations from 'redux/auth/auth-operations';

@@ -4,6 +4,7 @@ import style from './Button.module.scss';
 const Button = ({ title, type, onClick }) => {
   return (
     <button
+      data-testid="onClickFn"
       className={type === 'button' ? style.buttonButton : style.button}
       type={type}
       onClick={onClick}
@@ -14,15 +15,15 @@ const Button = ({ title, type, onClick }) => {
 };
 
 Button.defaultProps = {
-  title: 'button',
+  title: 'Click me',
   type: 'button',
-  onDelete: () => {},
+  onClick: () => {},
 };
 
 Button.propTypes = {
   title: PropTypes.string,
   type: PropTypes.string,
-  onDelete: PropTypes.func,
+  onClick: PropTypes.func,
 };
 
 export default Button;

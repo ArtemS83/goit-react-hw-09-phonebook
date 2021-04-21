@@ -23,8 +23,11 @@ const Filter = ({ text }) => {
 
   return (
     <>
-      <p className={style.title}>{text}</p>
+      <p data-testid="filtertextTest" className={style.title}>
+        {text}
+      </p>
       <input
+        data-testid="filterInputTest"
         className={style.input}
         type="text"
         name="filter"
